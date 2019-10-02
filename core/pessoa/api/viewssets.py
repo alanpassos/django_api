@@ -10,6 +10,7 @@ class PessoaViewsSet(viewsets.ModelViewSet):
     serializer_class = PessoaSerializer
     queryset = Pessoa.objects.all()
     filter_backends = [SearchFilter,OrderingFilter]
+    filterset_fields = ['nome']
     search_fields  = ['nome']
     ordering_fields = ['nome']
     ordering = ['id']

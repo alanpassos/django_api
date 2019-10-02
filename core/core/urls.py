@@ -18,6 +18,8 @@ from django.urls import path, include
 from rest_framework import routers
 from pessoa.api.viewssets import PessoaViewsSet
 from post.api.viewssets import PostViewsSet
+from rest_framework.authtoken.views import obtain_auth_token
+
 
 
 router = routers.DefaultRouter()
@@ -27,4 +29,5 @@ router.register('posts', PostViewsSet, base_name='Post')
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
+    path('auth/', obtain_auth_token),
 ]

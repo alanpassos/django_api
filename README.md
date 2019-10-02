@@ -5,7 +5,7 @@ Componentes para instalação
 ```bash
 
 pip3 install django
-
+pip3 install django-filter
 pip3 install djangorestframework
 
 ``` 
