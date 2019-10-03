@@ -2,9 +2,11 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.authentication import TokenAuthentication
 
 from post.models import Post
 from .serializers import PostSerializer, PostFullSerializer
+from core.permissions import IsOwnerPostOrReadOnly
 
 
 class PostViewsSet(viewsets.ModelViewSet):    
@@ -13,6 +15,8 @@ class PostViewsSet(viewsets.ModelViewSet):
     search_fields  = ['descricao']
     ordering_fields = ['descricao']
     ordering = ['id']
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsOwnerPostOrReadOnly]
 
     def get_queryset(self):
         queryset = Post.objects.all()        

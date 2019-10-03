@@ -2,9 +2,11 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.authentication import TokenAuthentication
 
 from pessoa.models import Pessoa
-from .serializers import PessoaSerializer
+from .serializers import PessoaSerializer,PessoaFullSerializer
+from core.permissions import IsOwnerPessoaOrReadOnly
 
 class PessoaViewsSet(viewsets.ModelViewSet):
     serializer_class = PessoaSerializer
@@ -14,6 +16,8 @@ class PessoaViewsSet(viewsets.ModelViewSet):
     search_fields  = ['nome']
     ordering_fields = ['nome']
     ordering = ['id']
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsOwnerPessoaOrReadOnly]
 
     
     def list(self, request, *args, **kwargs):
@@ -29,4 +33,16 @@ class PessoaViewsSet(viewsets.ModelViewSet):
             return self.get_paginated_response(serializer.data)
 
         serializer = PessoaSerializer(queryset,many=True)
+        return Response(data=serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def full_pessoas(self, request):
+        queryset = self.get_queryset().filter(ativo=True)
+        queryset = self.filter_queryset(queryset)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = PessoaFullSerializer(page,many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = PessoaFullSerializer(queryset,many=True)
         return Response(data=serializer.data)
