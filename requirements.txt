@@ -1,11 +1,15 @@
 astroid==2.3.0
+autopep8==1.4.4
 colorama==0.4.1
-Django==2.2.5
+Django==2.2.6
 django-filter==2.2.0
 djangorestframework==3.10.3
+djangorestframework-simplejwt==4.3.0
 isort==4.3.21
 lazy-object-proxy==1.4.2
 mccabe==0.6.1
+pycodestyle==2.5.0
+PyJWT==1.7.1
 pylint==2.4.1
 pytz==2019.2
 six==1.12.0
