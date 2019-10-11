@@ -1,3 +1,4 @@
+from rest_framework import  status
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -34,7 +35,7 @@ class PessoaViewsSet(viewsets.ModelViewSet):
             return self.get_paginated_response(serializer.data)
 
         serializer = PessoaSerializer(queryset,many=True)
-        return Response(data=serializer.data)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['get'])
     def full_pessoas(self, request):
@@ -46,4 +47,4 @@ class PessoaViewsSet(viewsets.ModelViewSet):
             return self.get_paginated_response(serializer.data)
 
         serializer = PessoaFullSerializer(queryset,many=True)
-        return Response(data=serializer.data)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)

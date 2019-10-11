@@ -1,3 +1,4 @@
+from rest_framework import  status
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -6,7 +7,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 
 from post.models import Post
 from .serializers import PostSerializer, PostFullSerializer
-# from core.permissions import IsOwnerPostOrReadOnly
+from core.permissions import IsOwnerPostOrReadOnly
 
 
 class PostViewsSet(viewsets.ModelViewSet):    
@@ -16,7 +17,7 @@ class PostViewsSet(viewsets.ModelViewSet):
     ordering_fields = ['descricao']
     ordering = ['id']
     # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsOwnerPostOrReadOnly]
+    permission_classes = [IsOwnerPostOrReadOnly]
 
     def get_queryset(self):
         queryset = Post.objects.all()        
@@ -35,7 +36,7 @@ class PostViewsSet(viewsets.ModelViewSet):
             return self.get_paginated_response(serializer.data)
 
         serializer = PostFullSerializer(queryset, many=True)     
-        return Response(data=serializer.data)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
     
     @action(detail=False, methods=['get'])
     def full_posts(self, request, *args, **kwargs):
@@ -43,11 +44,11 @@ class PostViewsSet(viewsets.ModelViewSet):
         queryset = self.filter_queryset(queryset)
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = PostFullSerializer(page,many=True)
+            serializer = PostFullSerializer(page,many=True)            
             return self.get_paginated_response(serializer.data)
 
         serializer = PostFullSerializer(queryset, many=True)     
-        return Response(data=serializer.data)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['get'])
     def full_inativos(self, request, *args, **kwargs):
@@ -59,4 +60,4 @@ class PostViewsSet(viewsets.ModelViewSet):
             return self.get_paginated_response(serializer.data)
 
         serializer = PostFullSerializer(queryset, many=True)     
-        return Response(data=serializer.data)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
