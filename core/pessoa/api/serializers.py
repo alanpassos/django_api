@@ -1,13 +1,9 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from pessoa.models import Pessoa
+from user.api.serializers import UserSerializer
 
 FIELD_ALL = ['id','nome','ativo','user']
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id','username']    
 
 class PessoaSerializer(serializers.ModelSerializer):
     class Meta:

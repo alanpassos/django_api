@@ -2,11 +2,12 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.authentication import TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 from pessoa.models import Pessoa
 from .serializers import PessoaSerializer,PessoaFullSerializer
-from core.permissions import IsOwnerPessoaOrReadOnly
+from core.permissions import CustomModelPermission,IsOwnerPessoaOrReadOnly
 
 class PessoaViewsSet(viewsets.ModelViewSet):
     serializer_class = PessoaSerializer
@@ -16,7 +17,7 @@ class PessoaViewsSet(viewsets.ModelViewSet):
     search_fields  = ['nome']
     ordering_fields = ['nome']
     ordering = ['id']
-    authentication_classes = [TokenAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsOwnerPessoaOrReadOnly]
 
     

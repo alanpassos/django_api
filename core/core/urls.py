@@ -19,8 +19,10 @@ from rest_framework import routers
 from pessoa.api.viewssets import PessoaViewsSet
 from post.api.viewssets import PostViewsSet
 from rest_framework.authtoken.views import obtain_auth_token
-
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = routers.DefaultRouter()
 router.register('pessoas', PessoaViewsSet, base_name='Pessoa')
@@ -30,4 +32,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('auth/', obtain_auth_token),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
