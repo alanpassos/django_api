@@ -1,9 +1,11 @@
 # API em Django Python 
 
-Componentes para instalação
 
 ```bash
-
-pip3 install -r requirements.txt
+#linux
+docker-compose up -d
 
 ``` 
+
+usuario: admin
+senha: 123456
