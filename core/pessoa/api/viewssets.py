@@ -18,7 +18,7 @@ class PessoaViewsSet(viewsets.ModelViewSet):
     search_fields  = ['nome']
     ordering_fields = ['nome']
     ordering = ['id']
-    # authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsOwnerPessoaOrReadOnly]
 
     
